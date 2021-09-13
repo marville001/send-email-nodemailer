@@ -61,9 +61,16 @@ router.get("/send/attachment", async (req, res) => {
         <div>
             <h4>Html and Attachment</h4>
             <p>we can also send html,</p>
-            <img src="cid:uniqueID"  alt="alts? />
+            <img src="cid:uniqueID"  alt="alts" />
         </div>
         `,
+        attachments:[
+            {
+                filename: 'image.png',
+                path: `https://firebasestorage.googleapis.com/v0/b/lodies-app.appspot.com/o/img%2Fimg.png?alt=media&token=641bb5be-6852-4bd1-a208-4fefbf9a8ece`,
+                cid: 'uniqueID'
+            },
+        ]
     }
 
     try {
