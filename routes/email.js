@@ -1,6 +1,7 @@
 const express =  require("express")
 const router = express.Router()
 const sendMail = require('../helpers/sendMail')
+const ejs = require("ejs");
 
 router.get("/", (req,res)=>{
     res.send("Welcome to mail sending")
@@ -47,6 +48,32 @@ router.get("/send/html", async (req, res) => {
     } catch (error) {
         res.send("Error sending email")
     }
+})
+
+router.get("/send/ejs", (req, res) => {
+    const name = "The Tech Guy"
+    
+
+    ejs.renderFile("views/hello.ejs", {name}, async (err, data)=>{
+        if(err) return console.log(err);
+        const message = {
+            from: {
+                name: name,
+                address: process.env.FROM_EMAIL
+            },
+            to: 'mwangimartin1904@gmail.com',
+            subject: "Sending attachments",
+            html: data,
+        }
+        try {
+            await sendMail(message)
+            res.send("Email sent")
+        } catch (error) {
+            res.send("Error sending email")
+        }
+    })
+
+    
 })
 
 router.get("/send/attachment", async (req, res) => {
