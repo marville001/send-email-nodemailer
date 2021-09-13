@@ -9,30 +9,61 @@ router.get("/", (req,res)=>{
 router.get("/send/text", async (req, res) => {
     const message = {
         from: {
-            name: 'Martin Mwangi',
+            name: 'The Tech',
+            address: process.env.FROM_EMAIL
+        },
+        to: 'mwangimartin1904@gmail.com',
+        subject: "Sending Text",
+        text: "This is a text email"
+    }
+
+    try {
+        await sendMail(message)
+        res.send("Email sent")
+    } catch (error) {
+        res.send("Error sending email")
+    }
+})
+
+router.get("/send/html", async (req, res) => {
+    const message = {
+        from: {
+            name: 'The Tech',
+            address: process.env.FROM_EMAIL
+        },
+        to: 'mwangimartin1904@gmail.com',
+        subject: "Sending HTML",
+        html: `
+        <div>
+            <h4>Sending HTML</h4>
+            <p>we can also send html,</p>
+        </div>
+        `,
+    }
+
+    try {
+        await sendMail(message)
+        res.send("Email sent")
+    } catch (error) {
+        res.send("Error sending email")
+    }
+})
+
+router.get("/send/attachment", async (req, res) => {
+    const message = {
+        from: {
+            name: 'The Tech',
             address: process.env.FROM_EMAIL
         },
         to: 'mwangimartin1904@gmail.com',
         subject: "Sending attachments",
-        cc: [
-            "ndiwa.ek@gmail.com",
-            "dkirigha18@gmail.com",
-            "faithkihara3@gmail.com"
-        ],
-        // text: "Wow, this waas fun"
         html: `
         <div>
-            <h4>Html in email</h4>
+            <h4>Html and Attachment</h4>
             <p>we can also send html,</p>
             <img src="cid:uniqueID"  alt="alts? />
         </div>
         `,
-        attachments: [
-            // {
-            //     filename: 'hello.txt',
-            //     content: "hello world!"
-            // }
-        ]
     }
 
     try {
